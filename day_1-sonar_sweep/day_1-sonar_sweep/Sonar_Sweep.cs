@@ -24,16 +24,46 @@ namespace Advent_of_Code_2021
             // Store parsed measurements in a list
             List<int> parsedSonarData = ParseSonarData(sonarDataUnparsed);
 
+            // Part 1: Compare individual readings to identify points of descent
+            SubsequentMeasurementCompare(parsedSonarData);
+
+            // Part 2: Compare sums of subsequent sliding three-measurement sets to identify trends of descent
+            ThreeMeasurementCompare(parsedSonarData);
+            
+        }
+
+        public static void SubsequentMeasurementCompare(List<int> parsedSonarData)
+        {
             // track number of descending readings
-            int measurementDecreaseCounter = 0;
+            int depthIncreaseCounter = 0;
 
             for (int i = 0; i < parsedSonarData.Count - 1; i++)
             {
                 if (parsedSonarData[i] < parsedSonarData[i + 1])
-                    measurementDecreaseCounter += 1;
+                    depthIncreaseCounter += 1;
             }
 
-            Console.WriteLine(measurementDecreaseCounter);
+            Console.WriteLine(depthIncreaseCounter);
+        }
+
+        public static void ThreeMeasurementCompare (List<int> parsedSonarData)
+        {
+            // track number of descending trends
+            int depthIncreaseCounter = 0;
+
+            for (int i = 0; i < parsedSonarData.Count - 3; i++)
+            {
+                // by creating the three-measurement sets within the for loop, they slide automatically
+                int sumA = parsedSonarData[i] + parsedSonarData[i + 1] + parsedSonarData[i + 2];
+                int sumB = parsedSonarData[i + 1] + parsedSonarData[i + 2] + parsedSonarData[i + 3];
+
+                if (sumA < sumB)
+                {
+                    // an increased sum means a greater depth
+                    depthIncreaseCounter += 1;
+                }
+            }
+            Console.WriteLine(depthIncreaseCounter);
         }
 
         public static string Web_Request_Get(string URL_to_parse)
@@ -72,7 +102,7 @@ namespace Advent_of_Code_2021
         public static List<int> ParseSonarData(string sonarDataUnparsed)
         {
             // Parse and convert sonar data from a convoluted string to a list of integers
-            
+
             // Create a list to store the sonar responses
             List<int> parsedSonarData = new List<int>();
 
