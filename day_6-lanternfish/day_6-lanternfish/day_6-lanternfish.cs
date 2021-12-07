@@ -13,7 +13,6 @@ namespace day_6_lanternfish
             long sum = 0;
             foreach (long value in LanternfishReproductionCycleStatus(lanternfishData).Skip(255).First().Values)
             {
-                Console.WriteLine(value);
                 sum = (long)sum + (long)value;
             }
             Console.WriteLine(sum);
@@ -100,10 +99,6 @@ namespace day_6_lanternfish
             foreach (string digit in arrayOfDigits)
             {
                 lanternFishCount[Int64.Parse(digit)] = lanternFishCount[Int64.Parse(digit)] + 1;
-            }
-            foreach (long value in lanternFishCount.Values)
-            {
-                Console.WriteLine(value);
             }
             return lanternFishCount;
         }
